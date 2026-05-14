@@ -1,0 +1,104 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@300;400;500;600;700;900&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-obsidian: #050505;
+  --color-neonTeal: #00F0FF;
+  --color-electricIndigo: #6600FF;
+  --font-sans: 'Inter', sans-serif;
+  --font-mono: 'Space Mono', monospace;
+}
+
+@layer base {
+  body {
+    background-color: var(--color-obsidian);
+    color: white;
+    overflow-x: hidden;
+  }
+}
+
+/* Conic gradient border spin animation */
+@keyframes border-spin {
+  from { --border-angle: 0deg; }
+  to   { --border-angle: 360deg; }
+}
+
+@property --border-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.energy-border {
+  --border-angle: 0deg;
+  animation: border-spin 3s linear infinite;
+  background:
+    linear-gradient(var(--color-obsidian), var(--color-obsidian)) padding-box,
+    conic-gradient(from var(--border-angle), transparent 75%, #00F0FF, #6600FF, transparent) border-box;
+  border: 1px solid transparent;
+}
+
+.energy-border-btn {
+  --border-angle: 0deg;
+  animation: border-spin 2s linear infinite;
+  background:
+    linear-gradient(#0a0a0a, #0a0a0a) padding-box,
+    conic-gradient(from var(--border-angle), transparent 60%, #00F0FF, #6600FF, #FF00A0, transparent) border-box;
+  border: 1px solid transparent;
+}
+
+/* Monospace utility */
+.font-system-mono {
+  font-family: 'Space Mono', monospace;
+}
+
+/* CRT Scanline overlay */
+.crt-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  pointer-events: none;
+  z-index: 997;
+  background: repeating-linear-gradient(
+    0deg, transparent, transparent 3px,
+    rgba(0,0,0,0.04) 3px, rgba(0,0,0,0.04) 4px
+  );
+}
+
+/* Marquee */
+@keyframes marquee-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.marquee-track {
+  animation: marquee-scroll 28s linear infinite;
+  will-change: transform;
+}
+
+/* Floating data particles */
+@keyframes float-up {
+  0%   { transform: translateY(0);      opacity: 0; }
+  10%  { opacity: 0.45; }
+  90%  { opacity: 0.2; }
+  100% { transform: translateY(-220px); opacity: 0; }
+}
+.data-particle {
+  position: absolute;
+  width: 2px; height: 2px;
+  border-radius: 50%;
+  background: #00F0FF;
+  animation: float-up linear infinite;
+}
+
+/* Custom noise texture overlay */
+.noise-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 50;
+  opacity: 0.05;
+  background-image: url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.65%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E');
+}
